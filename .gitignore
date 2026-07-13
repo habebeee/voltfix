@@ -1,7 +1,30 @@
+# Database data (local)
 db/data/*
 /db/data/
-../db/data/*
+
+# Environment & secrets — JANGAN di-commit
 .env
+src/.env
+.github-token
+.github-user
+nginx/ssl/*.key
+
+# macOS junk
+.DS_Store
+**/.DS_Store
+
+# Duplikat boilerplate & tools dev (tetap ada di laptop, tidak naik GitHub)
+template/
+ptt/
+delete-repo.sh
+docker-cleanup.sh
+start_old.sh
+Catatan.md
+
+# Dependencies & logs
 /vendor
 /node_modules
+**/vendor/
+**/node_modules/
 /storage/logs/*.log
+src/storage/logs/*.log
