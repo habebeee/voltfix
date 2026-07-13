@@ -6,6 +6,7 @@ use App\Helpers\CategoryHelper;
 use App\Filament\Admin\Resources\TicketResource\Pages;
 use App\Models\Technician;
 use App\Models\Ticket;
+use App\Services\WhatsAppService;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
@@ -388,6 +389,8 @@ class TicketResource extends Resource
                             'new_status' => 'WAITING_ASSIGNMENT',
                             'note'       => 'Disetujui oleh admin.',
                         ]);
+                        $record->load('customer');
+                        app(WhatsAppService::class)->sendTicketApproved($record);
                         Notification::make()->title('Tiket berhasil disetujui.')->success()->send();
                     }),
 
@@ -414,6 +417,8 @@ class TicketResource extends Resource
                             'new_status' => 'REJECTED',
                             'note'       => $data['rejection_reason'],
                         ]);
+                        $record->load('customer');
+                        app(WhatsAppService::class)->sendTicketRejected($record, $data['rejection_reason']);
                         Notification::make()->title('Tiket ditolak.')->warning()->send();
                     }),
 
@@ -451,6 +456,8 @@ class TicketResource extends Resource
                             'new_status' => 'ASSIGNED',
                             'note'       => 'Teknisi ditugaskan oleh admin.',
                         ]);
+                        $record->load(['customer', 'technician.user']);
+                        app(WhatsAppService::class)->sendTicketAssigned($record);
                         Notification::make()->title('Teknisi berhasil ditugaskan.')->success()->send();
                     }),
 

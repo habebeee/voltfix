@@ -21,6 +21,9 @@ docker-cleanup.sh
 start_old.sh
 Catatan.md
 
+# Dokumen capstone (lokal saja)
+*.docx
+
 # Dependencies & logs
 /vendor
 /node_modules
